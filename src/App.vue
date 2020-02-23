@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import Header from './components/Header.vue';
 import Footer from './components/Footer.vue';
 
@@ -18,6 +19,15 @@ export default {
   components: {
     'app-header': Header,
     'app-footer': Footer,
+  },
+  computed: {
+    ...mapActions([
+      'persistSession', 'fetchUsers',
+    ]),
+  },
+  created() {
+    this.$store.dispatch('persistSession');
+    this.$store.dispatch('fetchUsers');
   },
 };
 </script>
@@ -45,5 +55,8 @@ export default {
   :-ms-input-placeholder {
     font-style: italic;
     letter-spacing: 0.3rem
+  }
+  button:hover{
+    cursor: pointer;
   }
 </style>

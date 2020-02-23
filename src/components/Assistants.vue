@@ -1,41 +1,17 @@
 <template>
   <section class="assistants">
-    <p>{{ assts }}</p>
+    <p>{{ getUsers.length }} - Assistants are available</p>
     <h2>AVAILABLE ASSISTANTS</h2>
     <div class="container">
-      <div class="summary">
+      <div
+        v-for="assistant in getUsers"
+        :key="assistant.id"
+        class="summary">
         <img src="../assets/assistant.png"/>
         <div class="content">
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-          <button>CALL ME</button>
-        </div>
-      </div>
-      <div class="summary">
-        <img src="../assets/assistant.png"/>
-        <div class="content">
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-          <button>CALL ME</button>
-        </div>
-      </div>
-      <div class="summary">
-        <img src="../assets/assistant.png"/>
-        <div class="content">
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-          <button>CALL ME</button>
-        </div>
-      </div>
-      <div class="summary">
-        <img src="../assets/assistant.png"/>
-        <div class="content">
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-          <button>CALL ME</button>
-        </div>
-      </div>
-      <div class="summary">
-        <img src="../assets/assistant.png"/>
-        <div class="content">
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-          <button>CALL ME</button>
+          <p>{{ assistant.firstname }} {{ assistant.lastname }}</p>
+          <p>{{ assistant.occupation }} </p>
+          <button @click="goToAssistant(assistant.id)">CALL ME</button>
         </div>
       </div>
     </div>
@@ -43,12 +19,33 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
-  props: ['assts'],
+  props: {
+    assts: {
+      type: Array,
+    },
+  },
+  computed: {
+    ...mapGetters([
+      'getUsers',
+    ]),
+  },
+  methods: {
+    goToAssistant(id) {
+      this.$router.push({ name: 'user', params: { id } });
+    },
+  },
 };
 </script>
 
 <style scoped>
+  p{
+    text-align: center;
+    padding: 1rem;
+    font-weight: bolder;
+  }
   h2{
     color: #50232E;
     border-bottom: 2px solid #1AAF17;

@@ -1,12 +1,18 @@
 <template>
   <section id="user">
-    <h2>USER NAME</h2>
+    <div class="modal" v-show="reveal">
+      <div>
+        <p>Phone Number: {{ user.phone }}</p>
+        <button @click="closeModal" class="button">Close</button>
+      </div>
+    </div>
+    <h2>{{ user.firstname }} {{ user.lastname }}</h2>
     <div class="container">
       <div class="summary">
         <img src="../assets/assistant.png"/>
         <div class="content">
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-          <button>CALL ME</button>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. {{ user.about }}</p>
+          <button @click="showNumber()" class="button">CALL ME</button>
         </div>
         <div class="rating">
           <h4>RATE ME</h4>
@@ -19,15 +25,60 @@
       </div>
       <div class="comment">
         <input type="text" />
-        <input type="submit" value="SEND"/>
+        <!-- <input type="submit" value="SEND"/> -->
+        <button>SEND</button>
       </div>
     </div>
   </section>
 </template>
+<script>
+
+export default {
+  props: ['user'],
+  data() {
+    return {
+      reveal: false,
+    };
+  },
+  methods: {
+    showNumber() {
+      this.reveal = !this.reveal;
+      return true;
+    },
+    closeModal() {
+      this.reveal = !this.reveal;
+    },
+  },
+};
+</script>
 <style scoped>
   .container{
     width: 50%;
     margin: 0 auto;
+  }
+  .modal{
+    z-index: 1;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+  }
+  .modal>div{
+    background-color: #fff;
+    margin-top: 10%;
+    padding: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    height: 35%;
+    text-align: center;
+  }
+  .modal>div>.button{
+    margin-top: 5%;
   }
   h2{
     color: #50232E;
@@ -57,7 +108,7 @@
     position: relative;
     top: 3rem;
   }
-  .summary button{
+  .button{
     padding: 1rem 2rem;
     background-color: #1AAF17;
     color: #fff;
@@ -78,7 +129,8 @@
     background-color: #EBFEFE;
     width: 100%;
   }
-  .comment input[type="submit"]{
+  .comment button{
+    border: none;
     background: #11CDFC;
     color: #eee;
     font-size: 0.8rem;
@@ -89,7 +141,6 @@
     text-transform: uppercase;
   }
   .comment input{
-    color: #11CDFC;
     text-align: center;
     letter-spacing: 0.2rem;
     font-size: 1rem;

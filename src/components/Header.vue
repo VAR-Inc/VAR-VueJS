@@ -1,7 +1,13 @@
 <template>
   <header>
     <nav>
-      <img alt="Vue logo" src="../assets/logo.png">
+      <img alt="Vue logo" src="../assets/logo.png" @click="goHome">
+      <p class="logged-in" v-show="getUsername">
+        Welcome,
+        <span @click="profile" class="user-profile">
+          {{ getUsername }}</span>
+          <span @click="logOut" class="logout-btn"> logout</span>
+      </p>
       <div class="search-btn">
         <input type='text' placeholder="SEARCH FOR SERVICES"/>
         <button class="btn">search</button>
@@ -15,6 +21,9 @@
             <router-link to="/about">About</router-link>
             <router-link to="/login">Login</router-link>
             <router-link to="/signup">Signup</router-link>
+            <router-link to="/assistants">Assistants</router-link>
+            <router-link to="/credits">Credits</router-link>
+            <hr/>
             <router-link class="support" to="/support">Support</router-link>
           </div>
         </div>
@@ -24,10 +33,27 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
+
 export default {
-  data() {
-    return {
-    };
+  computed: {
+    ...mapGetters([
+      'getUsername',
+    ]),
+    ...mapActions([
+      'logout',
+    ]),
+  },
+  methods: {
+    goHome() {
+      this.$router.push('/');
+    },
+    logOut() {
+      this.$store.dispatch('logout');
+    },
+    profile() {
+      this.$router.push({ name: 'my-profile-page' });
+    },
   },
 };
 
@@ -42,6 +68,25 @@ export default {
   img {
     width: 10rem;
     height: 4rem;
+  }
+  .user-profile{
+    font-size: 1.1rem;
+    font-weight: bolder;
+    color: rgb(60, 201, 105);
+  }
+  .user-profile:hover{
+    cursor: pointer;
+  }
+  .logged-in{
+    margin-top: 1rem;
+  }
+  .logout-btn{
+    margin-left: 2rem;
+    color: blue;
+    font-style: italic;
+  }
+  .logout-btn:hover{
+    cursor: pointer;
   }
   .search-btn{
     margin-top: 1rem;

@@ -7,6 +7,9 @@ import Login from '../views/Login.vue';
 import Profile from '../views/Profile.vue';
 import Assistants from '../views/Assistants.vue';
 import User from '../views/User.vue';
+import NotFound from '../views/NotFound.vue';
+import Credits from '../views/Credits.vue';
+import About from '../views/About.vue';
 
 Vue.use(VueRouter);
 
@@ -30,6 +33,7 @@ const routes = [
     path: '/profile',
     name: 'my-profile-page',
     component: Profile,
+    props: true,
   },
   {
     path: '/support',
@@ -42,17 +46,25 @@ const routes = [
     component: Assistants,
   },
   {
-    path: '/user',
-    name: 'user-page',
+    name: 'user',
+    path: '/users/:id',
     component: User,
+    props: true,
+  },
+  {
+    path: '/credits',
+    name: 'credits-page',
+    component: Credits,
   },
   {
     path: '/about',
     name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+    component: About,
+  },
+  {
+    path: '*',
+    name: 'error-404',
+    component: NotFound,
   },
 ];
 

@@ -5,23 +5,23 @@
       <form>
         <div class="form-row">
           <!-- <label for="name">NAME</label><br/> -->
-          <input type="text" disabled placeholder='NAME'/>
+          <input type="text" disabled :value="getUser.firstname+' '+getUser.lastname"/>
         </div>
         <div class="form-row">
           <!-- <label for="contact">E-MAIL</label><br/> -->
-          <input type="email" disabled placeholder="OCCUPATION"/>
+          <input type="email" disabled :value="getUser.occupation"/>
         </div>
         <div class="form-row">
           <!-- <label for="title">TITLE</label><br/> -->
-          <input type="text" disabled placeholder="YEARS OF EXPERIENCE"/>
+          <input type="text" disabled :value="getUser.experience"/>
         </div>
         <div class="form-row">
           <!-- <label for="message">MESSAGE</label><br/> -->
-          <textarea row="10" disabled placeholder="ABOUT ME"></textarea>
+          <textarea row="10" disabled :value="getUser.about"></textarea>
         </div>
         <div class="form-row">
           <!-- <label for="message">MESSAGE</label><br/> -->
-          <input type="text" disabled placeholder="PHONE NUMBER"/>
+          <input type="text" disabled :value="getUser.phone"/>
         </div>
         <div class="send-btn">
           <label class="picture-upload">
@@ -43,6 +43,17 @@
     </div>
   </section>
 </template>
+<script>
+import { mapGetters } from 'vuex';
+
+export default {
+  computed: {
+    ...mapGetters([
+      'getUser',
+    ]),
+  },
+};
+</script>
 
 <style scoped>
   #profile {

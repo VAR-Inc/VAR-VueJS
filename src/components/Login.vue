@@ -1,61 +1,69 @@
 <template>
-  <div class="container">
-    <p v-show="msg">{{ msg }}</p>
-    <form v-on:submit.prevent="signUp">
-      <p>ACCOUNT</p>
-      <div class="form-row">
-        <label for="username">Username</label>
-        <input type="text" placeholder="Email" v-model="username" />
-      </div>
-      <div class="form-row">
-        <label for="password">Password</label>
-        <input type="password" placeholder="Password" v-model="password" />
-      </div>
-      <div class="send-btn">
+  <div id="login">
+    <div class="container">
+      <form v-on:submit.prevent="logIn">
+        <p>ACCOUNT</p>
+        <div class="form-row">
+          <label for="username">Username</label>
+          <input type="text" placeholder="Email" v-model="formData.usernameOrEmail" />
+        </div>
+        <div class="form-row">
+          <label for="password">Password</label>
+          <input type="password" placeholder="Password" v-model="formData.password" />
+        </div>
+        <div class="send-btn">
+          <button>LOGIN</button>
+        </div>
+      </form>
+      <div class="bottom-line">
         <span>FORGOT PASSWORD?</span>
-        <button>LOGIN</button>
-        <span>SIGNUP</span>
+        <router-link class="signup" to="/signup">SIGNUP</router-link>
       </div>
-    </form>
+    </div>
   </div>
 </template>
 
 <script>
-// import AuthService from '../services/AuthService';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
-  name: 'signup',
+  name: 'login',
   data() {
     return {
-      username: '',
-      password: '',
+      formData: {
+        usernameOrEmail: '',
+        password: '',
+      },
       msg: '',
     };
   },
+  computed: {
+    ...mapGetters([
+      'getUsers',
+    ]),
+    ...mapActions([
+      'login',
+    ]),
+  },
   methods: {
-    async signUp(e) {
-      console.log(e);
-      try {
-        const credentials = {
-          username: this.username,
-          password: this.password,
-        };
-        // const response = await AuthService.signup(credentials);
-        // this.msg = response.message;
-        console.log(credentials);
-      } catch (error) {
-        this.msg = error.response.error;
-      }
+    logIn() {
+      this.$store.dispatch('login', this.formData);
     },
   },
 };
 </script>
 
 <style scoped>
-  form {
-    margin: 3rem auto;
+  #login{
+    height: 100vh;
+  }
+  .container{
+    width: 50vw;
+    margin: 0 auto 3rem auto;
     background: #11cdfc;
-    width: 40vw;
+  }
+  form {
+    margin: 1rem auto;
   }
   form p:nth-child(1){
     text-align: center;
@@ -81,7 +89,6 @@ export default {
     text-transform: uppercase;
   }
   .form-row input{
-    color: #11CDFC;
     text-align: center;
     letter-spacing: 0.6rem;
     font-size: 1rem;
@@ -96,9 +103,10 @@ export default {
     outline: none;
   }
   .send-btn{
-    display: flex;
     font-size: 80%;
-    justify-content: space-between;
+    width: 50%;
+    margin: 0 auto;
+    text-align: center;
   }
   .send-btn button{
     padding: 1rem 3rem;
@@ -107,31 +115,29 @@ export default {
     text-transform: uppercase;
     border: none;
     font-weight: bold;
-    margin-bottom: 1.5rem;
     letter-spacing: 0.2rem;
   }
-  .send-btn span{
-    margin: 1rem;
-    margin-top: 3rem;
-    font-style: italic;
-    color: #EEE;
+  .bottom-line{
+    padding: 0.8rem;
+    font-size: 0.7rem;
     font-weight: bold;
-    flex-basis: 30%;
-    align-content: flex-end;
+    color: white;
+    font-style: italic;
   }
-  .send-btn span:last-child{
-    text-align: right;
+  .bottom-line > .signup{
+    float: right;
+    color: inherit;
+    font-style: inherit;
+    text-decoration: none;
   }
-  @media only screen and (max-width: 600px){
+    @media only screen and (max-width: 870px){
+    .container{
+      width: 85%;
+      border: 1px solid red;
+    }
     .send-btn button{
       padding: 0 20px;
       height: 50px;
-    }
-  }
-  @media only screen and (max-width: 900px){
-    form{
-      width:80vw;
-      padding: 0;
     }
   }
 </style>

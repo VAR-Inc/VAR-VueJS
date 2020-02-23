@@ -7,7 +7,10 @@
     <div class="contact">
       <div class="powered-by">
         <p>POWERED BY:</p>
-        <span>&#169;</span>
+        <span>&#169; VAR 2020</span>
+        <p>
+          <a class="icons-by" href="https://friconix.com/" target="_blank">Icons by Friconix</a>
+        </p>
         <!-- <img src="../assets/footer-phone.png"/> -->
       </div>
       <div class="contact-us">
@@ -56,6 +59,10 @@ export default {
   .powered-by{
     flex-basis: 10%;
     margin-left: 3rem;
+  }
+  .icons-by{
+    text-decoration: none;
+    color: black;
   }
   .contact-us{
     flex-basis: 80%;
